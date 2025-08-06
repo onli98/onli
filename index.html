@@ -2,13 +2,19 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Redirecionando para o WhatsApp...</title>
+  <title>Obrigado pela compra!</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
   <style>
     body {
-      background-color: #075E54;
-      color: #FFFFFF;
-      font-family: 'Segoe UI', 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #ffffff;
+      color: #333333;
+      font-family: 'Inter', sans-serif;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -16,66 +22,75 @@
       height: 100vh;
       text-align: center;
     }
+
     h1 {
-      font-size: 2rem;
-      margin-bottom: 1rem;
+      font-size: 2.2rem;
+      margin-bottom: 0.8rem;
     }
-    .contador {
-      font-size: 3rem;
-      font-weight: bold;
-      color: #25D366;
-      margin-top: 20px;
+
+    p {
+      font-size: 1.1rem;
+      margin-bottom: 30px;
+      color: #666666;
     }
-    .check {
-      font-size: 4rem;
-      color: #25D366;
-      display: none;
+
+    .botao {
+      background-color: #1a73e8;
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .botao:hover {
+      background-color: #0c5ed7;
     }
   </style>
 </head>
 <body>
-  <h1>Parabéns pelo acesso!</h1>
-  <p>Você será direcionado em segundos...</p>
-  <div class="contador" id="contador">3</div>
-  <div class="check" id="check">✔</div>
+  <h1>🎉 Obrigado pela compra!</h1>
+  <p>Seu acesso está liberado. Clique abaixo para acessar seu conteúdo:</p>
+
+  <button class="botao" onclick="acessarConteudo()">Acessar Conteúdo</button>
+
+  <!-- Facebook Pixel -->
+  <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+
+    fbq('init', '1193017659526800'); // Seu Pixel ID
+    fbq('track', 'PageView'); // Marca a visita na página
+  </script>
+
+  <noscript>
+    <img height="1" width="1" style="display:none"
+         src="https://www.facebook.com/tr?id=1193017659526800&ev=PageView&noscript=1"/>
+  </noscript>
 
   <script>
-    // Lista com dois números de WhatsApp
-    const numeros = [
-      '5573991379244',
-      '5573991299778'
-    ];
+    function acessarConteudo() {
+      // Verifica se já foi marcado o evento de compra
+      const jaComprou = localStorage.getItem("eventoPurchaseMarcado");
 
-    // Pega o índice atual salvo no navegador (ou começa com 0)
-    let indice = parseInt(localStorage.getItem('indiceNumero')) || 0;
-
-    // Define o número atual e salva o próximo índice para a próxima visita
-    const numeroAtual = numeros[indice];
-    const proximoIndice = (indice + 1) % numeros.length;
-    localStorage.setItem('indiceNumero', proximoIndice);
-
-    // Mensagem personalizada com encode para URL
-    const mensagem = encodeURIComponent("Olá, Amor! Como tenho acesso ao seu conteúdo.");
-    const link = `https://wa.me/${numeroAtual}?text=${mensagem}`;
-
-    // Contador regressivo de 3 segundos
-    let segundos = 3;
-    const contador = document.getElementById("contador");
-    const check = document.getElementById("check");
-
-    const interval = setInterval(() => {
-      segundos--;
-      if (segundos > 0) {
-        contador.textContent = segundos;
-      } else {
-        clearInterval(interval);
-        contador.style.display = "none";
-        check.style.display = "block";
-        setTimeout(() => {
-          window.location.href = link;
-        }, 1000);
+      // Se ainda não foi marcado, dispara o evento e grava no localStorage
+      if (!jaComprou) {
+        fbq('track', 'Purchase', {value: 1.00, currency: 'BRL'});
+        localStorage.setItem("eventoPurchaseMarcado", "true");
       }
-    }, 1000);
+
+      // Redireciona para o conteúdo
+      window.location.href = "https://drive.google.com/drive/folders/1odDv7WZn3cfsXuPrdklo-dWcPeSch8q2?usp=sharing";
+    }
   </script>
 </body>
 </html>
