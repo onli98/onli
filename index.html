@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ST CORTS - Agendando...</title>
 
-  <!-- Fonte -->
+  <!-- Fonte bonita -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap" rel="stylesheet">
 
   <style>
@@ -38,6 +38,24 @@
       object-fit: cover;
       border: 3px solid #25D366;
       margin-bottom: 12px;
+      animation: pulse 1.5s infinite ease-in-out;
+      box-shadow: 0 0 12px #25D36680;
+      transition: transform 0.3s ease;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+        box-shadow: 0 0 12px #25D36680;
+      }
+      50% {
+        transform: scale(1.05);
+        box-shadow: 0 0 18px #25D366cc;
+      }
+      100% {
+        transform: scale(1);
+        box-shadow: 0 0 12px #25D36680;
+      }
     }
 
     .localizacao {
@@ -82,7 +100,7 @@
 </head>
 <body>
   <div class="container">
-    <!-- Foto do barbeiro -->
+    <!-- Foto com efeito pulsante -->
     <img src="https://i.postimg.cc/LXQgdtxs/Imagem-do-Whats-App-de-2025-08-07-s-10-15-33-6748e889.jpg" alt="ST CORTS" class="foto">
 
     <!-- Localização -->
